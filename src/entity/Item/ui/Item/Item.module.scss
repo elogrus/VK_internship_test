@@ -1,0 +1,43 @@
+.Item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    & .Content {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    & .OwnerWrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+    }
+
+    & .Avatar {
+        width: 30px;
+        height: 30px;
+    }
+
+    & .ProjectWrapper {
+        display: flex;
+        flex-direction: column;
+        color: inherit;
+        gap: 3px;
+    }
+
+    & .Language {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+    & .ColorCircle {
+        width: 0.8em;
+        height: 0.8em;
+        border-radius: 1em;
+    }
+}

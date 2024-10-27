@@ -1,0 +1,46 @@
+.ItemList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 7px 10px;
+    background-color: lightblue;
+    border-radius: 7px;
+    color: inherit;
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    &:active {
+        opacity: 0.9;
+    }
+}
+
+.Top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Id {
+    display: flex;
+}
+
+.FullName {
+    display: flex;
+}
+
+.Owner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: inherit;
+}
+
+.Avatar {
+    width: 30px;
+    aspect-ratio: 1;
+}
+
+.OwnerLogin {
+    display: flex;
+}
