@@ -1,127 +1,111 @@
 import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import {
-    Avatar,
-    Box,
-    Card,
-    CardActions,
-    CardContent,
-    IconButton,
-    Input,
-    Link,
-    Typography,
-} from "@mui/material";
+import { Card, CardActions, CardContent, IconButton } from "@mui/material";
+import { useAppSelector } from "app/store";
 import { IItem } from "entity/Item/types/Item";
-import GithubLanguageColors from "shared/util/GithubLanguageColors";
+import { memo, useRef, useState } from "react";
 import * as cls from "./Item.module.scss";
-
-interface ItemProps {
-    item: IItem;
-    editable?: boolean;
-    onEdit?: () => {};
+import { LanguagePart } from "./parts/LanguagePart";
+import { OwnerPart } from "./parts/OwnerPart";
+import { ProjectPart } from "./parts/ProjectPart";
+export interface ItemProps {
+    // item: IItem;
+    id: number;
+    isEdit?: boolean;
+    onEditItem: (id: number, newItem: IItem) => void;
+    onDeleteItem: (id: number) => void;
+}
+export interface IInputsRef {
+    avatar?: string;
+    login?: string;
+    profileLink?: string;
+    name?: string;
+    description?: string;
+    language?: string;
 }
 
-export const Item = (props: ItemProps) => {
-    const { item, editable = false } = props;
+export interface PartProps extends ItemProps {
+    InputsRef: ReturnType<typeof useRef<IInputsRef>>;
+    isEdit: boolean;
+    item: IItem;
+}
+
+export const Item = memo((props: ItemProps) => {
+    const { id, onEditItem, onDeleteItem } = props;
+    const item = useAppSelector((state) =>
+        state.GithubItems.items.find((item) => item.id === id)
+    );
+    console.log('rerender Item')
+    const [isEdit, setIsEdit] = useState(false);
+    const InputsRef = useRef<IInputsRef>({});
+    const onSave = () => {
+        const newItem = {
+            ...item,
+            name: InputsRef.current?.name || item.name,
+            description: InputsRef.current?.description || item.description,
+            language: InputsRef.current?.language || item.language,
+            owner: {
+                ...item.owner,
+                login: InputsRef.current?.login || item.owner.login,
+                avatar_url: InputsRef.current?.avatar || item.owner.avatar_url,
+                html_url: InputsRef.current?.profileLink || item.owner.html_url,
+            },
+        };
+        onEditItem(item.id, newItem);
+        setIsEdit(false);
+    };
+
+    const onStartEdit = () => {
+        setIsEdit(true);
+    };
+
+    const onDelete = () => {
+        onDeleteItem(item.id);
+    };
+
+    const onClear = () => {
+        setIsEdit(false);
+    };
+
     return (
         <Card className={cls.Item}>
             <CardContent className={cls.Content}>
-                <Box>
-                    {!editable ? (
-                        <Link
-                            target="_blank"
-                            rel="noreferrer"
-                            href={item.owner.html_url}
-                            className={cls.OwnerWrapper}
-                        >
-                            <Avatar
-                                className={cls.Avatar}
-                                aria-label={item.owner.login}
-                                src={item.owner.avatar_url}
-                            />
-                            <Typography variant="subtitle1">
-                                {item.owner.login}
-                            </Typography>
-                        </Link>
-                    ) : (
-                        <Box className={cls.OwnerWrapper}>
-                            <Avatar
-                                className={cls.Avatar}
-                                aria-label={item.owner.login}
-                                src={item.owner.avatar_url}
-                            />
-                            <Input defaultValue={item.owner.login} />
-                        </Box>
-                    )}
-                </Box>
-                <Box>
-                    {!editable ? (
-                        <Link
-                            target="_blank"
-                            rel="noreferrer"
-                            href={item.html_url}
-                            underline="none"
-                            className={cls.ProjectWrapper}
-                        >
-                            <Typography variant="h5">{item.name}</Typography>
-                            <Typography variant="caption">
-                                {item.description}
-                            </Typography>
-                        </Link>
-                    ) : (
-                        <Box className={cls.ProjectWrapper}>
-                            <Input
-                                aria-label="Изменить название"
-                                defaultValue={item.name}
-                                placeholder="Название"
-                            />
-                            <Input
-                                aria-label="Изменить описание"
-                                defaultValue={item.description}
-                                placeholder="Описание"
-                            />
-                        </Box>
-                    )}
-                </Box>
-                {item.language && (
-                    <Box>
-                        {!editable ? (
-                            <Typography
-                                className={cls.Language}
-                                variant="subtitle2"
-                            >
-                                <div
-                                    className={cls.ColorCircle}
-                                    style={{
-                                        backgroundColor:
-                                            GithubLanguageColors[
-                                                item.language
-                                            ] ||
-                                            GithubLanguageColors["NotFound"],
-                                    }}
-                                ></div>
-                                {item.language}
-                            </Typography>
-                        ) : (
-                            <Input
-                                aria-label="Изменить язык"
-                                defaultValue={item.language}
-                                placeholder="Язык"
-                            />
-                        )}
-                    </Box>
-                )}
+                <OwnerPart
+                    item={item}
+                    isEdit={isEdit}
+                    InputsRef={InputsRef}
+                    {...props}
+                />
+                <ProjectPart
+                    item={item}
+                    isEdit={isEdit}
+                    InputsRef={InputsRef}
+                    {...props}
+                />
+                <LanguagePart
+                    item={item}
+                    isEdit={isEdit}
+                    InputsRef={InputsRef}
+                    {...props}
+                />
             </CardContent>
 
             <CardActions>
-                <IconButton color="info">
-                    {!editable ? <EditIcon /> : <CheckIcon />}
+                <IconButton
+                    onClick={!isEdit ? onStartEdit : onSave}
+                    color="info"
+                >
+                    {!isEdit ? <EditIcon /> : <CheckIcon />}
                 </IconButton>
-                <IconButton color="error">
-                    <DeleteIcon />
+                <IconButton
+                    color="error"
+                    onClick={!isEdit ? onDelete : onClear}
+                >
+                    {!isEdit ? <DeleteIcon /> : <ClearIcon />}
                 </IconButton>
             </CardActions>
         </Card>
     );
-};
+});
