@@ -24,7 +24,7 @@ export const ProjectPart = ({ isEdit, item, InputsRef }: PartProps) => (
                     size="small"
                     slotProps={{
                         input: {
-                            sx: { fontSize: "var(--fz-big)" },
+                            sx: { fontSize: "1.5rem" },
                         },
                     }}
                     defaultValue={item.name}

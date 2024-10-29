@@ -11,11 +11,11 @@ export const OwnerPart = ({ isEdit, item, InputsRef }: PartProps) => (
                 href={item.owner.html_url}
                 className={cls.OwnerWrapper}
             >
-                <Avatar
+                {/* <Avatar
                     className={cls.Avatar}
                     aria-label={item.owner.login}
                     src={item.owner.avatar_url}
-                />
+                /> */}
                 <Typography
                     className="MuiTypography-subtitle1"
                     variant="subtitle1"

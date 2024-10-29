@@ -3,16 +3,15 @@ import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Card, CardActions, CardContent, IconButton } from "@mui/material";
-import { useAppSelector } from "app/store";
 import { IItem } from "entity/Item/types/Item";
 import { memo, useRef, useState } from "react";
 import * as cls from "./Item.module.scss";
 import { LanguagePart } from "./parts/LanguagePart";
 import { OwnerPart } from "./parts/OwnerPart";
 import { ProjectPart } from "./parts/ProjectPart";
+
 export interface ItemProps {
-    // item: IItem;
-    id: number;
+    item: IItem;
     isEdit?: boolean;
     onEditItem: (id: number, newItem: IItem) => void;
     onDeleteItem: (id: number) => void;
@@ -29,15 +28,10 @@ export interface IInputsRef {
 export interface PartProps extends ItemProps {
     InputsRef: ReturnType<typeof useRef<IInputsRef>>;
     isEdit: boolean;
-    item: IItem;
 }
 
 export const Item = memo((props: ItemProps) => {
-    const { id, onEditItem, onDeleteItem } = props;
-    const item = useAppSelector((state) =>
-        state.GithubItems.items.find((item) => item.id === id)
-    );
-    console.log('rerender Item')
+    const { item, onEditItem, onDeleteItem } = props;
     const [isEdit, setIsEdit] = useState(false);
     const InputsRef = useRef<IInputsRef>({});
     const onSave = () => {
