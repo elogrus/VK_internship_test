@@ -13,6 +13,7 @@ import { fetchData } from "../utils/fetchData";
 import * as cls from "./ItemsWidget.module.scss";
 import { ContentPart } from "./parts/ContentPart/ContentPart";
 import { FormPart } from "./parts/FormPart/FormPart";
+import { Alert } from "@mui/material";
 
 export interface IQueryRef {
     queryString: string;
@@ -54,7 +55,7 @@ const ItemsWidget = () => {
 
     const onSend: MouseEventHandler<HTMLButtonElement> = (e) => {
         dispatch(setItems([]));
-        queryRef.current = formRef.current;
+        queryRef.current = { ...queryRef.current, ...formRef.current };
         fetchData(queryRef, setIsLoading, dispatch);
     };
 
