@@ -1,5 +1,5 @@
 import { Box, Link, TextField, Typography } from "@mui/material";
-import { ItemProps, PartProps } from "../../Item";
+import { PartProps } from "../../Item";
 import * as cls from "./styles.module.scss";
 
 export const ProjectPart = ({ isEdit, item, InputsRef }: PartProps) => (
@@ -11,6 +11,7 @@ export const ProjectPart = ({ isEdit, item, InputsRef }: PartProps) => (
                 href={item.html_url}
                 underline="none"
                 className={cls.ProjectWrapper}
+                data-testid="Item_project"
             >
                 <Typography variant="h5">{item.name}</Typography>
                 <Typography variant="caption">{item.description}</Typography>
@@ -21,6 +22,7 @@ export const ProjectPart = ({ isEdit, item, InputsRef }: PartProps) => (
                     variant="standard"
                     aria-label="Изменить название"
                     helperText="Название"
+                    placeholder="Название"
                     size="small"
                     slotProps={{
                         input: {
@@ -28,7 +30,6 @@ export const ProjectPart = ({ isEdit, item, InputsRef }: PartProps) => (
                         },
                     }}
                     defaultValue={item.name}
-                    placeholder="Название"
                     onChange={(e) => {
                         InputsRef.current.name = e.currentTarget.value;
                     }}
@@ -36,11 +37,11 @@ export const ProjectPart = ({ isEdit, item, InputsRef }: PartProps) => (
                 <TextField
                     variant="standard"
                     helperText="Описание"
+                    placeholder="Описание"
                     margin="dense"
                     size="small"
                     aria-label="Изменить описание"
                     defaultValue={item.description}
-                    placeholder="Описание"
                     onChange={(e) => {
                         InputsRef.current.description = e.currentTarget.value;
                     }}

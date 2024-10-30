@@ -8,14 +8,16 @@ export const OwnerPart = ({ isEdit, item, InputsRef }: PartProps) => (
             <Link
                 target="_blank"
                 rel="noreferrer"
+                data-testid="Item_owner"
                 href={item.owner.html_url}
                 className={cls.OwnerWrapper}
             >
-                {/* <Avatar
+                <Avatar
+                    data-testid="Item_avatar"
                     className={cls.Avatar}
                     aria-label={item.owner.login}
                     src={item.owner.avatar_url}
-                /> */}
+                />
                 <Typography
                     className="MuiTypography-subtitle1"
                     variant="subtitle1"
@@ -28,6 +30,7 @@ export const OwnerPart = ({ isEdit, item, InputsRef }: PartProps) => (
                 <TextField
                     size="small"
                     helperText="Ссылка на аватар"
+                    placeholder="Ссылка на аватар"
                     variant="standard"
                     fullWidth
                     defaultValue={item.owner.avatar_url}
@@ -38,6 +41,7 @@ export const OwnerPart = ({ isEdit, item, InputsRef }: PartProps) => (
                 <TextField
                     size="small"
                     helperText="Логин"
+                    placeholder="Логин"
                     variant="standard"
                     fullWidth
                     defaultValue={item.owner.login}
@@ -47,6 +51,7 @@ export const OwnerPart = ({ isEdit, item, InputsRef }: PartProps) => (
                 />
                 <TextField
                     helperText="Ссылка на профиль"
+                    placeholder="Ссылка на профиль"
                     variant="standard"
                     margin="dense"
                     fullWidth

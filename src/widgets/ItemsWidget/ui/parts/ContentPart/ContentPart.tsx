@@ -24,13 +24,17 @@ export const ContentPart = (props: ContentPartProps) => {
                 onEditItem={onEditItem}
                 onDeleteItem={onDeleteItem}
             />
-            <div ref={ObservantRef} className={cls.Observant}></div>
-            {isLoading && <CircularProgress />}
-            {!isLoading &&
-                list.total_count === 0 &&
-                list.total_count <= list.items.length && (
-                    <Typography variant="h6">Записи не найдены</Typography>
-                )}
+            <div
+                data-testid="ItemsWidget_observant"
+                ref={ObservantRef}
+                className={cls.Observant}
+            ></div>
+            {isLoading && (
+                <CircularProgress data-testid="ItemsWidget_progress" />
+            )}
+            {!isLoading && list.total_count === 0 && (
+                <Typography variant="h6">Записи не найдены</Typography>
+            )}
             {!isLoading &&
                 list.total_count > 0 &&
                 list.total_count <= list.items.length && (

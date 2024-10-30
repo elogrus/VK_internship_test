@@ -27,7 +27,6 @@ const ItemsSlice = createSlice({
         },
         editItem(state, action: PayloadAction<[id: number, newItem: IItem]>) {
             const [id, newItem] = action.payload;
-            // console.log("newItem", newItem);
             const itemIndex = state.items.findIndex((item) => item.id === id);
             state.items[itemIndex] = newItem;
             return state;

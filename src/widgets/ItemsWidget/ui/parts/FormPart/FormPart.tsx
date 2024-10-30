@@ -27,6 +27,7 @@ export const FormPart = (props: FormPartProps) => {
                 label="Сортировать по"
                 onChange={onSelectChange}
                 defaultValue={GithubSorts.STARS}
+                data-testid="ItemsWidget_select"
                 select
             >
                 <MenuItem value={GithubSorts.STARS}>Звездам</MenuItem>
@@ -35,12 +36,17 @@ export const FormPart = (props: FormPartProps) => {
             </TextField>
 
             <InputBase
+                data-testid="ItemsWidget_input"
                 fullWidth
                 defaultValue={queryRef.current.queryString}
                 onChange={onInputChange}
             />
 
-            <IconButton onClick={onSend} color="primary">
+            <IconButton
+                data-testid="ItemsWidget_sendButton"
+                onClick={onSend}
+                color="primary"
+            >
                 <SendIcon />
             </IconButton>
         </Paper>

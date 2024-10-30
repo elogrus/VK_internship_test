@@ -2,7 +2,7 @@ import { GithubSorts } from "shared/consts/GithubSorts";
 
 interface IQuery {
     ITEMS_ON_PAGE: number;
-    getURL: (query?: string, page?: number, sort?: GithubSorts) => string;
+    getURL: (query: string, page: number, sort: GithubSorts) => string;
 }
 
 export const Query: IQuery = {

@@ -15,7 +15,7 @@ export const ItemList = ({
     onDeleteItem,
 }: ItemListProps) => {
     return (
-        <List className={cls.ItemList}>
+        <List className={cls.ItemList} data-testid="ItemList_root">
             {items.map((item) => (
                 <Item
                     key={item.id}

@@ -13,7 +13,6 @@ import { fetchData } from "../utils/fetchData";
 import * as cls from "./ItemsWidget.module.scss";
 import { ContentPart } from "./parts/ContentPart/ContentPart";
 import { FormPart } from "./parts/FormPart/FormPart";
-import { Alert } from "@mui/material";
 
 export interface IQueryRef {
     queryString: string;
@@ -51,6 +50,10 @@ const ItemsWidget = () => {
             }
         });
         observer.observe(ObservantRef.current);
+
+        return () => {
+            observer.disconnect();
+        };
     }, []);
 
     const onSend: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -68,7 +71,7 @@ const ItemsWidget = () => {
     }, []);
 
     return (
-        <div className={cls.ItemsWidget}>
+        <div data-testid="ItemsWidget_root" className={cls.ItemsWidget}>
             <FormPart
                 onInputChange={(e) =>
                     (formRef.current.queryString = e.currentTarget.value)

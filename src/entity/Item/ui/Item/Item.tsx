@@ -12,7 +12,6 @@ import { ProjectPart } from "./parts/ProjectPart";
 
 export interface ItemProps {
     item: IItem;
-    isEdit?: boolean;
     onEditItem: (id: number, newItem: IItem) => void;
     onDeleteItem: (id: number) => void;
 }
@@ -64,7 +63,7 @@ export const Item = memo((props: ItemProps) => {
     };
 
     return (
-        <Card className={cls.Item}>
+        <Card data-testid="Item_root" className={cls.Item}>
             <CardContent className={cls.Content}>
                 <OwnerPart
                     item={item}
@@ -86,18 +85,26 @@ export const Item = memo((props: ItemProps) => {
                 />
             </CardContent>
 
-            <CardActions>
+            <CardActions data-testid="Item_buttons">
                 <IconButton
                     onClick={!isEdit ? onStartEdit : onSave}
                     color="info"
                 >
-                    {!isEdit ? <EditIcon /> : <CheckIcon />}
+                    {!isEdit ? (
+                        <EditIcon data-testid="Item_editButton" />
+                    ) : (
+                        <CheckIcon data-testid="Item_saveButton" />
+                    )}
                 </IconButton>
                 <IconButton
                     color="error"
                     onClick={!isEdit ? onDelete : onClear}
                 >
-                    {!isEdit ? <DeleteIcon /> : <ClearIcon />}
+                    {!isEdit ? (
+                        <DeleteIcon data-testid="Item_deleteButton" />
+                    ) : (
+                        <ClearIcon data-testid="Item_clearButton" />
+                    )}
                 </IconButton>
             </CardActions>
         </Card>
